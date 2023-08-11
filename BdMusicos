@@ -1,0 +1,79 @@
+create database trabalho;
+
+use trabalho;
+
+create table paises(
+    -> paisId int not null primary key,
+    -> paisNome Varchar(30) not null
+    -> );
+
+create table musicos(
+    -> musicoId int not null primary key,
+    -> musicoNome Varchar(20) not null,
+    -> musicoSobreNome VarChar(20) not null,
+    -> MusicoDataNascimento Date Not Null,
+    -> paisId Int Not null,
+    -> foreign key (paisId) references paises(paisId)
+    -> );
+
+ create table artistas(
+    -> ArtistaId Int Not Null Primary Key,
+    -> ArtistaNome Varchar(30)
+    -> );
+
+create table musicosArtistas(
+    -> ArtistaId Int Not null,
+    -> MusicoId Int Not Null,
+    -> MusicoArtistaEntrada Date not null,
+    -> MusicoArtistaSaida Date Not null,
+    -> Foreign key (ArtistaId) references Artistas(ArtistaId),
+    -> Foreign Key (MusicoId) references Musicos(MusicoId)
+    -> );
+
+ Create Table Gravadoras(
+    -> GravadorasId Int Not Null Primary Key,
+    -> GravadoraNome Varchar(30) not Null
+    -> );
+
+Create Table Albuns(
+    -> ALbumId Int Not Null Primary Key,
+    -> ArtistaId Int Not NUll,
+    -> GravadoraId Int Not NUll,
+    -> ALbumDataLancamento Date Not NUll,
+    -> AlbumNome Varchar(30) Not NUll,
+    -> Foreign Key (ArtistaId) References Artistas(ArtistaId),
+    -> Foreign Key (GravadoraId) References Gravadoras(GravadorasId)
+    -> );
+
+Create Table Generos(
+    -> GeneroId Int Not NUll Primary Key,
+    -> GeneroNome Int NOt null
+    -> );
+
+
+Create Table Musicas(
+    -> AlbumId Int Not NUll,
+    -> MusicaFaixa Int Not null Primary Key,
+    -> MusicaTitulo Varchar(30) Not NUll,
+    -> GeneroId Int Not nUll,
+    -> MusicaDuracao Time Not NUll,
+    -> Foreign Key (AlbumId) References Albuns(AlbumId),
+    -> Foreign Key (GeneroId) references Generos(GeneroId)
+    -> );
+
+Create Table ListasReproducao(
+    -> ListaReproducaoId Int Not NUll Primary Key,
+    -> ListaReproducaoNome Varchar(30) Not NUll
+    -> );
+
+
+Create Table ListasReproducaoMusicas(
+    -> ListaReproducaoId Int Not Null,
+    -> ALbumId Int Not Null,
+    -> MusicaFaixa Int Not NUll,
+    -> Foreign Key (ListaReproducaoId) references ListasReproducao(ListaReproducaoId),
+    -> Foreign Key (AlbumId) References Albuns(AlbumId),
+    -> Foreign Key (MusicaFaixa) References Musicas(MusicaFaixa)
+    ->  );
+
+
