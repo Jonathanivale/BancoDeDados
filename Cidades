@@ -1,0 +1,81 @@
+create database vendas;
+
+use vendas;
+
+create table estados(
+    -> estadoId int Not null auto_increment,
+    -> estadoNome Varchar(20) not null,
+    -> estadoUF char(2) not null,
+    -> Primary key(EstadoId)
+    -> );
+
+create table mesorregioes(
+    -> MesoId Int Not null Auto_increment,
+    -> MesoNome Varchar(50) not null,
+    -> EstadoId int not null,
+    -> Primary key(MesoId),
+    -> Foreign key (EstadoId) references estados(EstadoId)
+    -> );
+
+create table microrregioes(
+    -> MicroId int not null auto_increment,
+    -> MicroNome Varchar(50) not null,
+    -> MesoId Int Not null,
+    -> Primary Key(MicroId),
+    -> Foreign key(MesoId) references mesorregioes(MesoId)
+    -> );
+
+create table cidades(
+    -> CidadeId Int Not Null Auto_increment,
+    -> CidadeNome VARCHAR(50) Not null,
+    -> MicroId Int Not null,
+    -> Primary Key(cidadeId),
+    -> Foreign key(MicroId) references microrregioes(microId)
+    -> );
+
+ create table clientes(
+    -> clienteId int not null auto_increment,
+    -> clienteNome Varchar(50) not null,
+    -> clienteNascime DATE Not NULL,
+    -> clienteCPF CHAR(11) not null,
+    -> clienteEmail VARCHAR(100) not null,
+    -> clienteCelular Char(11) Not null,
+    -> CidadeId Int not null,
+    -> ClienteEndereço Varchar(100) not null,
+    -> clienteBairro VARCHAR(100) NOT NULL,
+    -> ClienteCEP CHAR(8) NOT NULL,
+    -> Primary Key(ClienteId),
+    -> Foreign Key(CidadeId) References cidades(cidadeId)
+    -> );
+
+ create table categorias(
+    -> CategoriaId Int Not null auto_increment,
+    -> CategoriaNome varchar(30) Not null,
+    -> Primary Key(categoriaId)
+    -> );
+
+create table produtos(
+    -> ProdutoId Int not null auto_Increment,
+    -> ProdutoNome Varchar(30) Not null,
+    -> ProdutoPreço Decimal(7,2) Not null,
+    -> CategoriaId int Not null,
+    -> Primary Key(ProdutoId),
+    -> Foreign Key(CategoriaId) references Categorias(CategoriaId)
+    -> );
+
+ Create Table Vendas(
+    -> VendaId Int Not null Auto_increment,
+    -> VendaData Date Not null,
+    -> ClienteId Int Not null,
+    -> Primary Key(VendaId),
+    -> Foreign key(ClienteId) references clientes(ClienteID)
+    -> );
+
+Create Table Vendas_produtos(
+    -> VendaId Int Not null,
+    -> ProdutoId Int Not null,
+    -> ProdutoQtde Int Not null,
+    -> primary key(vendaId, ProdutoId),
+    -> Foreign key(vendaId) references Vendas(vendaid),
+    -> Foreign key(ProdutoId) references Produtos(ProdutoId)
+    -> );
